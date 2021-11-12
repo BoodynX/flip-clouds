@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: log into VPS and trigger deploy script
@@ -21,11 +21,12 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           debug: true
           script: |
-            echo "START ACTIONS"
-            whoami
-            echo "PWD"
-            pwd
-            echo "Contents of the landing DIR"
-            ls -l
-            echo "END ACTIONS"
+            echo "START DEPLOYMENT"
+            cd flipclouds
+            git pull
+            composer install
+            docker-compose -f docker-compose.prod.yml composer run -rm composer install
+            docker-compose -f docker-compose.prod.yml run --rm npm install
+            docker-compose -f docker-compose.prod.yml run --rm artisan migrate
+            echo "END DEPLOYMENT"
           
