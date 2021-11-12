@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: log into VPS and trigger deploy script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          debug: true
+          script: |
+            echo "START ACTIONS"
+            whoami
+            echo "PWD"
+            pwd
+            echo "Contents of the landing DIR"
+            ls -l
+            echo "END ACTIONS"
+          
