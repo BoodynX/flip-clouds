@@ -7,17 +7,21 @@ services:
   nginx:
     image: nginx:stable-alpine
     container_name: nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - .:/var/www/html
       - ./local-dev/nginx/:/etc/nginx/conf.d/
+      - ./local-dev/certbot/conf:/etc/letsencrypt
+      - ./local-dev/certbot/www:/var/www/certbot
     depends_on:
       - php
       - mysql
     networks:
       - laravel
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   mysql:
     image: mysql:5.7.36
@@ -85,3 +89,8 @@ services:
 
   certbot:
     image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./local-dev/certbot/conf:/etc/letsencrypt
+      - ./local-dev/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
