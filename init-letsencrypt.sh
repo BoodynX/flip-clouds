@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(flashcards.pl www.flashcards.pl)
+domains=(flashclouds.pl www.flashclouds.pl)
 rsa_key_size=4096
 data_path="./local-dev/certbot"
 email="budny.tomasz@gmail.com" # Adding a valid address is strongly recommended
