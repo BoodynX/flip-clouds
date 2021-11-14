@@ -8,7 +8,7 @@ fi
 domains=(flashclouds.pl www.flashclouds.pl)
 rsa_key_size=4096
 data_path="./local-dev/certbot"
-email="budny.tomasz@gmail.com" # Adding a valid address is strongly recommended
+email="budny.tomasz@gmail.com"
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$data_path" ]; then
