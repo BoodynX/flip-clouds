@@ -11,7 +11,7 @@ services:
       - "8088:80"
     volumes:
       - .:/var/www/html
-      - ./local-dev/nginx/:/etc/nginx/conf.d/
+      - ./local-dev/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
       - mysql
