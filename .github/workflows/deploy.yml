@@ -23,7 +23,6 @@ jobs:
             cd flipclouds
             git pull
             docker-compose run --rm composer install --no-dev
-            docker-compose run --rm npm install --only=prod
             docker-compose run --rm artisan migrate
             echo "END DEPLOYMENT"
           
