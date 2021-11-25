@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['verified'])->group(function () {
     Route::get('/admin', function () {
         return view('admin');
     });
